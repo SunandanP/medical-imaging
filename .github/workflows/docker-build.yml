@@ -21,6 +21,7 @@ jobs:
           sudo apt-get -f install -y  # Fixes broken dependencies if any
       - name: Check Mariadb installation
         run: |
+          sudo mariadb -u root -p root -e "USE mysql;"
           sudo mariadb -u root -p root -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';"
           sudo service mysql stop
           sudo service mysql start
