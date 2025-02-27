@@ -17,11 +17,13 @@ jobs:
       - name: Set up MySQL
         run: |
           sudo systemctl start mysql
-          sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'; FLUSH PRIVILEGES;"
-          sudo mysql -e "DELETE FROM mysql.user WHERE User='';"
-          sudo mysql -e "DROP DATABASE IF EXISTS test;"
-          sudo mysql -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';"
-          sudo mysql -e "FLUSH PRIVILEGES;"
+          sudo systemctl enable mysql
+          sudo mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'; FLUSH PRIVILEGES;"
+          sudo mysql -u root -proot -e "DELETE FROM mysql.user WHERE User='';"
+          sudo mysql -u root -proot -e "DROP DATABASE IF EXISTS test;"
+          sudo mysql -u root -proot -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';"
+          sudo mysql -u root -proot -e "FLUSH PRIVILEGES;"
+          sudo mysql -u root -proot -e "SHOW DATABASES;"
 
       - name: Set up Redis
         run: |
@@ -31,7 +33,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y redis-server mariadb-server curl wget nodejs npm xfonts-75dpi xfonts-base
+          sudo apt-get install -y redis-server mariadb-server curl wget nodejs npm xfonts-75dpi xfonts-base mysql-client
 
       - name: Install wkhtmltopdf
         run: |
