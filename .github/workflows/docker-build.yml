@@ -12,22 +12,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up MySQL
-        run: |
-          sudo systemctl start mysql
-          sudo systemctl enable mysql
-
-          # Try accessing MySQL without a password first
-          if ! sudo mysql -u root -e "SELECT 1;"; then
-            echo "MySQL root access is password-protected. Attempting to set a password."
-            sudo mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'; FLUSH PRIVILEGES;"
-          fi
-
-          # Verify MySQL access with the new password
-          sudo mysql -u root -proot -e "SELECT 1;"
-
+        uses: actions/checkout@v4s
 
       - name: Set up Redis
         run: |
@@ -37,8 +22,11 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y redis-server mariadb-server curl wget nodejs npm xfonts-75dpi xfonts-base mysql-client
-
+          sudo apt-get install -y redis-server mariadb-server curl wget nodejs npm xfonts-75dpi xfonts-base
+          sudo apt-get -f install -y  # Fixes broken dependencies if any
+      - name: Check Mariadb installation
+        run: |
+          mariadb -u root -p root -e "SHOW DATABASES;"
       - name: Install wkhtmltopdf
         run: |
           wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb
@@ -51,9 +39,9 @@ jobs:
 
       - name: Set up Frappe and create site
         run: |
-          bench init frappe-bench --frappe-branch version-15
+          bench init --frappe-branch version-15 frappe-bench
           cd frappe-bench
-          bench new-site bloodcell.classify --admin-password root --mariadb-root-password root
+          bench new-site bloodcell.classify --admin-password root --mariadb-root-password root --install-app frappe
 
       - name: Install custom app from GitHub
         run: |
