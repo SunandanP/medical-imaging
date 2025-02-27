@@ -8,16 +8,21 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Changed to Linux
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
+      - name: Set up MySQL
+        run: |
+          sudo systemctl start mysql
+          sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'; FLUSH PRIVILEGES;"
+
+      - name: Set up Redis
+        run: |
+          sudo systemctl start redis
+          sudo systemctl enable redis
 
       - name: Install system dependencies
         run: |
@@ -65,4 +70,4 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/hemoscan:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/medical-imaging:latest
