@@ -1,0 +1,63 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-23 21:54:16.215566",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "cell_detection_section",
+  "detection_threshold",
+  "detection_average_area_tolerance",
+  "column_break_slwg",
+  "fasterrcnn_model_path"
+ ],
+ "fields": [
+  {
+   "fieldname": "cell_detection_section",
+   "fieldtype": "Section Break",
+   "label": "Cell Detection"
+  },
+  {
+   "fieldname": "detection_threshold",
+   "fieldtype": "Percent",
+   "label": "Detection Threshold"
+  },
+  {
+   "fieldname": "detection_average_area_tolerance",
+   "fieldtype": "Percent",
+   "label": "Detection Average Area Tolerance"
+  },
+  {
+   "fieldname": "column_break_slwg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "fasterrcnn_model_path",
+   "fieldtype": "Data",
+   "label": "FasterRCNN Model Path"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2025-02-23 21:58:47.111259",
+ "modified_by": "Administrator",
+ "module": "Blood Cell Classification",
+ "name": "Blood Cell Analysis Configuration",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

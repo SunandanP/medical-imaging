@@ -1,0 +1,63 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest  # Use macOS as the build machine
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install system dependencies
+        run: |
+          brew update
+          brew install redis mariadb curl wget node npm wkhtmltopdf
+
+      - name: Install Frappe Bench
+        run: |
+          pip install frappe-bench
+          bench --version
+
+      - name: Set up Frappe and create site
+        run: |
+          bench init frappe-bench --frappe-branch version-15
+          cd frappe-bench
+          bench new-site bloodcell.classify --admin-password root --mariadb-root-password root
+
+      - name: Install custom app from GitHub
+        run: |
+          cd frappe-bench
+          bench get-app medical-imaging https://github.com/SunandanP/medical-imaging.git
+          bench --site bloodcell.classify install-app medical-imaging
+
+      - name: Download model files
+        run: |
+          mkdir -p frappe-bench/apps/medical-imaging/medical_imaging/prediction_models
+          cd frappe-bench/apps/medical-imaging/medical_imaging/prediction_models
+          wget --no-check-certificate "https://drive.google.com/uc?export=download&id=1LMQNx2ajKGsGpxA1PBW0_Im3MDmWR5_M" -O EfficientNetB4.pth
+          wget --no-check-certificate "https://drive.google.com/uc?export=download&id=1BbFdIfvJPiPUl0kzUFiayiws6tXEEgYJ" -O fasterrcnn_model_v2.pth
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/medical-imaging:latest .
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/medical-imaging:latest

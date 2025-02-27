@@ -1,0 +1,87 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:CD{YY}{######}",
+ "creation": "2025-02-17 16:46:50.073443",
+ "default_view": "Image",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "blood_smear_image",
+  "cell_detection_image",
+  "column_break_xlkm",
+  "notes",
+  "section_break_tups",
+  "detection_result",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "blood_smear_image",
+   "fieldtype": "Link",
+   "label": "Blood Smear Image",
+   "options": "Blood Smear Image"
+  },
+  {
+   "fieldname": "cell_detection_image",
+   "fieldtype": "Attach Image",
+   "label": "Cell Detection Image"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "column_break_xlkm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_tups",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "detection_result",
+   "fieldtype": "Table",
+   "label": "Detection Result",
+   "options": "Detection Result"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Cell Detection Image",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "image_field": "cell_detection_image",
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-02-26 00:06:27.165512",
+ "modified_by": "Administrator",
+ "module": "Blood Cell Classification",
+ "name": "Cell Detection Image",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

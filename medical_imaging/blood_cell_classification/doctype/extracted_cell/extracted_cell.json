@@ -1,0 +1,72 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:EC-{DD}-{MM}-{YY}-{######}",
+ "creation": "2025-02-17 16:50:59.463620",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "cell_detection_image",
+  "cell_image",
+  "column_break_dbas",
+  "primary_classification",
+  "validated_classification"
+ ],
+ "fields": [
+  {
+   "fieldname": "cell_detection_image",
+   "fieldtype": "Link",
+   "label": "Cell Detection Image",
+   "options": "Cell Detection Image"
+  },
+  {
+   "fieldname": "cell_image",
+   "fieldtype": "Attach Image",
+   "label": "Cell Image"
+  },
+  {
+   "fieldname": "column_break_dbas",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Select",
+   "fieldname": "primary_classification",
+   "fieldtype": "Select",
+   "label": "Primary Classification",
+   "options": "Select\nCircular\nElongated\nOther"
+  },
+  {
+   "default": "Select",
+   "fieldname": "validated_classification",
+   "fieldtype": "Select",
+   "label": "Validated Classification",
+   "options": "Select\nCircular\nElongated\nOther"
+  }
+ ],
+ "image_field": "cell_image",
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-18 14:07:29.116588",
+ "modified_by": "Administrator",
+ "module": "Blood Cell Classification",
+ "name": "Extracted Cell",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

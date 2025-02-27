@@ -1,0 +1,95 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:BSI{YY}{######}",
+ "creation": "2025-02-17 16:40:29.429135",
+ "default_view": "Image",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "patient",
+  "capture_date",
+  "image",
+  "zoom_leve",
+  "column_break_dmkq",
+  "notes",
+  "microscope_model",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "patient",
+   "fieldtype": "Link",
+   "label": "Patient",
+   "options": "Patient"
+  },
+  {
+   "fieldname": "capture_date",
+   "fieldtype": "Date",
+   "label": "Capture Date"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "label": "Image"
+  },
+  {
+   "default": "100",
+   "fieldname": "zoom_leve",
+   "fieldtype": "Int",
+   "label": "Zoom Leve"
+  },
+  {
+   "fieldname": "column_break_dmkq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "default": "Leika",
+   "fieldname": "microscope_model",
+   "fieldtype": "Data",
+   "label": "Microscope Model"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Blood Smear Image",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "image_field": "image",
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-02-26 00:05:52.070753",
+ "modified_by": "Administrator",
+ "module": "Blood Cell Classification",
+ "name": "Blood Smear Image",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
