@@ -14,11 +14,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Redis
-        run: |
-          sudo systemctl start redis
-          sudo systemctl enable redis
-
       - name: Install system dependencies
         run: |
           sudo apt-get update
