@@ -21,7 +21,9 @@ jobs:
           sudo apt-get -f install -y  # Fixes broken dependencies if any
       - name: Check Mariadb installation
         run: |
-          mariadb -u root -p root -e "SHOW DATABASES;"
+          sudo mariadb -u root -p root -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';"
+          sudo service mysql stop
+          sudo service mysql start
       - name: Install wkhtmltopdf
         run: |
           wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb
