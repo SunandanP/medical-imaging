@@ -1,9 +1,0 @@
-# Copyright (c) 2025, algo-rhythm.tech and Contributors
-# See license.txt
-
-# import frappe
-from frappe.tests.utils import FrappeTestCase
-
-
-class TestPatient_(FrappeTestCase):
-	pass
