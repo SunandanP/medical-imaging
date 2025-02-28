@@ -1,14 +1,16 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:EC-{DD}-{MM}-{YY}-{######}",
+ "autoname": "format:EC{########}",
  "creation": "2025-02-17 16:50:59.463620",
+ "default_view": "Image",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "cell_detection_image",
   "cell_image",
-  "column_break_dbas",
+  "xai_image",
+  "column_break_khit",
   "primary_classification",
   "validated_classification"
  ],
@@ -25,10 +27,6 @@
    "label": "Cell Image"
   },
   {
-   "fieldname": "column_break_dbas",
-   "fieldtype": "Column Break"
-  },
-  {
    "default": "Select",
    "fieldname": "primary_classification",
    "fieldtype": "Select",
@@ -41,12 +39,21 @@
    "fieldtype": "Select",
    "label": "Validated Classification",
    "options": "Select\nCircular\nElongated\nOther"
+  },
+  {
+   "fieldname": "xai_image",
+   "fieldtype": "Attach Image",
+   "label": "XAI Image"
+  },
+  {
+   "fieldname": "column_break_khit",
+   "fieldtype": "Column Break"
   }
  ],
  "image_field": "cell_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-18 14:07:29.116588",
+ "modified": "2025-03-01 02:07:33.364417",
  "modified_by": "Administrator",
  "module": "Blood Cell Classification",
  "name": "Extracted Cell",

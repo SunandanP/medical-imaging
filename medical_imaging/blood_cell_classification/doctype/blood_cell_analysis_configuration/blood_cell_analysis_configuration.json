@@ -9,7 +9,9 @@
   "detection_threshold",
   "detection_average_area_tolerance",
   "column_break_slwg",
-  "fasterrcnn_model_path"
+  "fasterrcnn_model_path",
+  "cell_classification_section",
+  "classification_model_path"
  ],
  "fields": [
   {
@@ -35,12 +37,22 @@
    "fieldname": "fasterrcnn_model_path",
    "fieldtype": "Data",
    "label": "FasterRCNN Model Path"
+  },
+  {
+   "fieldname": "cell_classification_section",
+   "fieldtype": "Section Break",
+   "label": "Cell Classification"
+  },
+  {
+   "fieldname": "classification_model_path",
+   "fieldtype": "Data",
+   "label": "Classification Model Path"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-02-23 21:58:47.111259",
+ "modified": "2025-02-28 23:54:20.583330",
  "modified_by": "Administrator",
  "module": "Blood Cell Classification",
  "name": "Blood Cell Analysis Configuration",
