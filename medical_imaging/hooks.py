@@ -9,6 +9,12 @@ override_whitelisted_methods = {
     "medical_imaging.api.classification.classify_image": "medical_imaging.api.classification.classify_image"
 }
 
+doc_events = {
+    "Blood Cell Analysis Configuration": {
+        "on_update": "medical_imaging.medical_imaging.doctype.blood_cell_analysis_configuration.blood_cell_analysis_configuration.on_update"
+    }
+}
+
 # Apps
 # ------------------
 

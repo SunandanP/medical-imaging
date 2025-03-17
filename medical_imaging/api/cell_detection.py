@@ -75,7 +75,7 @@ def get_predictions(image_path):
 
     return filtered_boxes, filtered_labels, filtered_scores
 
-def save_img_prediction(prediction, img_path, id, score_threshold=0.40):
+def save_img_prediction(prediction, img_path, id, score_threshold):
     pred_boxes, pred_labels, scores = prediction
 
     class_names = ['background', 'circular', 'elongated', 'other']

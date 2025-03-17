@@ -69,6 +69,44 @@ def load_image(image_path):
 
 import base64  # Add this import at the top of your file
 from io import BytesIO
+from frappe.utils.background_jobs import enqueue
+
+@frappe.whitelist()
+def enqueue_classification(cell_detection_image_id):
+    try:
+        frappe.enqueue("medical_imaging.api.classification.classify_all_extracted_cells",
+                       queue='long',
+                       job_name=f"Classify Cells {cell_detection_image_id}",
+                       timeout=600,
+                       callback="medical_imaging.api.job_status.on_classification_complete",
+                       enqueue_after_commit=True,
+                       cell_detection_image_id=cell_detection_image_id)
+        return {"status": "queued"}
+    except Exception as e:
+        frappe.log_error(f"Enqueue Error: {str(e)}", "Deep Learning API")
+        return {"status": "error", "message": str(e)}
+
+def classify_all_extracted_cells(cell_detection_image_id, **kwargs):
+    extracted_cells = frappe.get_all("Extracted Cell",
+                                     filters={"cell_detection_image": cell_detection_image_id},
+                                     pluck="name")
+
+    if not extracted_cells:
+        frappe.msgprint("No extracted cells found for classification.")
+        return
+
+    for cell_id in extracted_cells:
+        classify_extracted_cell2(cell_id)
+
+    frappe.msgprint(f"Classification completed for {len(extracted_cells)} cells.")
+    on_classification_complete(cell_detection_image_id)
+
+@frappe.whitelist()
+def on_classification_complete(cell_detection_image_id):
+    frappe.publish_realtime("classification_complete", {
+        "cell_detection_image_id": cell_detection_image_id
+    })
+
 
 @frappe.whitelist(allow_guest=True)
 def classify_extracted_cell():
@@ -125,6 +163,81 @@ def classify_extracted_cell():
 
         # Upload to Frappe
         file_name = f"gradcam_{extracted_cell_id}.jpg"
+        file_doc = frappe.get_doc({
+            "doctype": "File",
+            "file_name": file_name,
+            "content": file_content_base64,
+            "decode": True,
+            "is_private": True
+        })
+        file_doc.insert(ignore_permissions=True)
+        frappe.db.commit()
+
+        # Update the Extracted Cell document
+        extracted_cell.reload()
+        extracted_cell.validated_classification = classes[pred_class]
+        extracted_cell.xai_image = file_doc.file_url
+        extracted_cell.save(ignore_permissions=True)
+
+        return {"status": "success", "validated_classification": classes[pred_class], "xai_image": file_doc.file_url}
+
+    except Exception as e:
+        frappe.log_error(f"Classification API Error: {str(e)}", "Deep Learning API")
+        return {"status": "error", "message": str(e)}
+
+def classify_extracted_cell2(cell_id):
+    classes = ["Circular", "Elongated", "Other"]
+    try:
+        if not cell_id:
+            return {"status": "error", "message": "extracted_cell_id is required"}
+
+        extracted_cell = frappe.get_doc("Extracted Cell", cell_id)
+        if not extracted_cell.cell_image:
+            return {"status": "error", "message": "cell_image not found"}
+
+        image_path = get_file_path(extracted_cell.cell_image)
+        if not image_path:
+            return {"status": "error", "message": "Image file not found on the server"}
+
+        original_img = Image.open(image_path).convert('RGB')
+        img_tensor = transform(original_img).unsqueeze(0)
+
+        target_layer = model.efficientnet_b4.conv_head
+        gradcam = GradCAM(model, target_layer)
+
+        output = model(img_tensor)
+        pred_class = output.argmax(dim=1).item()
+
+        model.zero_grad()
+        output[0, pred_class].backward()
+
+        heatmap = gradcam.generate_cam()[0]
+
+        # Resize and smooth the heatmap
+        heatmap = cv2.resize(heatmap, (original_img.width, original_img.height))
+        heatmap = cv2.GaussianBlur(heatmap, (5, 5), 0)  # Add smoothing
+        heatmap = np.uint8(255 * heatmap)
+        heatmap = cv2.applyColorMap(heatmap, cv2.COLORMAP_JET)
+
+        # Convert original image to BGR for OpenCV
+        img_cv = np.array(original_img)
+        img_cv = cv2.cvtColor(img_cv, cv2.COLOR_RGB2BGR)
+
+        # Overlay heatmap with adjusted weights
+        superimposed_img = cv2.addWeighted(img_cv, 0.5, heatmap, 0.5, 0)
+
+        # Convert BGR to RGB for saving
+        superimposed_img_rgb = cv2.cvtColor(superimposed_img, cv2.COLOR_BGR2RGB)
+
+        # Save in memory instead of disk
+        buffered = BytesIO()
+        pil_image = Image.fromarray(superimposed_img_rgb)
+        pil_image.save(buffered, format="JPEG")
+        file_content = buffered.getvalue()
+        file_content_base64 = base64.b64encode(file_content).decode('utf-8')
+
+        # Upload to Frappe
+        file_name = f"gradcam_{cell_id}.jpg"
         file_doc = frappe.get_doc({
             "doctype": "File",
             "file_name": file_name,

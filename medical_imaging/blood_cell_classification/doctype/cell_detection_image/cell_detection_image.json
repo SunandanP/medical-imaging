@@ -61,7 +61,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-26 00:06:27.165512",
+ "modified": "2025-03-08 17:31:15.833770",
  "modified_by": "Administrator",
  "module": "Blood Cell Classification",
  "name": "Cell Detection Image",
@@ -78,6 +78,20 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Doctor",
+   "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],

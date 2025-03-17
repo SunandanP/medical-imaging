@@ -1,63 +1,32 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:PR{YY}{######}",
- "creation": "2025-02-17 17:08:55.636084",
+ "creation": "2025-03-08 13:56:40.322807",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "patient",
-  "report_date",
-  "column_break_ivgd",
-  "approved_by",
-  "approval_date",
-  "section_break_rxrc",
-  "report_content"
+  "rbc_morphology_analysis",
+  "content"
  ],
  "fields": [
   {
-   "fieldname": "patient",
+   "fieldname": "rbc_morphology_analysis",
    "fieldtype": "Link",
-   "label": "Patient",
-   "options": "Patient"
+   "label": "RBC Morphology Analysis",
+   "options": "RBC Morphology Analysis"
   },
   {
-   "fieldname": "report_date",
-   "fieldtype": "Date",
-   "label": "Report Date"
-  },
-  {
-   "fieldname": "column_break_ivgd",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "approved_by",
-   "fieldtype": "Link",
-   "label": "Approved By",
-   "options": "User"
-  },
-  {
-   "fieldname": "approval_date",
-   "fieldtype": "Date",
-   "label": "Approval Date"
-  },
-  {
-   "fieldname": "section_break_rxrc",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "report_content",
-   "fieldtype": "Long Text",
-   "label": "Report Content"
+   "fieldname": "content",
+   "fieldtype": "HTML",
+   "label": "Content"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-25 23:58:56.793933",
+ "modified": "2025-03-08 13:58:25.817887",
  "modified_by": "Administrator",
  "module": "Blood Cell Classification",
  "name": "Patient Report",
- "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

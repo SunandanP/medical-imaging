@@ -18,3 +18,8 @@ class BloodCellAnalysisConfiguration(Document):
 
 		if not detection_model_path or not os.path.exists(detection_model_path):
 			frappe.throw(f"Detection model not found at {classification_model_path}. Please upload a valid model file.")
+
+	def on_update(self):
+		frappe.clear_cache(doctype="Blood Cell Analysis Configuration")  # Clear doctype cache
+		frappe.db.commit()  # Commit to apply changes
+		frappe.logger().info("Cache Cleared: Blood Cell Analysis Configuration")

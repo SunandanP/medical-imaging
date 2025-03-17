@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-02-23 21:54:16.215566",
+ "creation": "2025-03-11 15:55:51.740600",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -52,7 +52,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-02-28 23:54:20.583330",
+ "modified": "2025-03-11 16:05:23.187961",
  "modified_by": "Administrator",
  "module": "Blood Cell Classification",
  "name": "Blood Cell Analysis Configuration",
