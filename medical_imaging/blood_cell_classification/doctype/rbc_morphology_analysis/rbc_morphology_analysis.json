@@ -1,0 +1,143 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:RMA{######}",
+ "creation": "2025-03-08 13:46:48.594965",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "patient",
+  "column_break_lhwd",
+  "cell_detection_image",
+  "section_break_nxjr",
+  "cells_examined",
+  "column_break_nljr",
+  "normal_cell_count",
+  "sickle_cell_count",
+  "other_cell_count",
+  "column_break_njqb",
+  "normal_cells_percentage",
+  "sickle_cells_percentage",
+  "other_cells_percentage",
+  "section_break_ossw",
+  "approved_by",
+  "column_break_tqze",
+  "approval_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "patient",
+   "fieldtype": "Link",
+   "label": "Patient",
+   "options": "Patient",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_lhwd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cell_detection_image",
+   "fieldtype": "Link",
+   "label": "Cell Detection Image",
+   "options": "Cell Detection Image",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_nxjr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "cells_examined",
+   "fieldtype": "Int",
+   "label": "Cells Examined"
+  },
+  {
+   "fieldname": "column_break_nljr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "normal_cell_count",
+   "fieldtype": "Int",
+   "label": "Normal Cell Count"
+  },
+  {
+   "fieldname": "sickle_cell_count",
+   "fieldtype": "Int",
+   "label": "Sickle Cell Count"
+  },
+  {
+   "fieldname": "other_cell_count",
+   "fieldtype": "Int",
+   "label": "Other Cell Count"
+  },
+  {
+   "fieldname": "column_break_njqb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "normal_cells_percentage",
+   "fieldtype": "Percent",
+   "label": "Normal Cells Percentage",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sickle_cells_percentage",
+   "fieldtype": "Percent",
+   "label": "Sickle Cells Percentage",
+   "read_only": 1
+  },
+  {
+   "fieldname": "other_cells_percentage",
+   "fieldtype": "Percent",
+   "label": "Other Cells Percentage",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_ossw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Link",
+   "label": "Approved By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_tqze",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "approval_date",
+   "fieldtype": "Date",
+   "label": "Approval Date",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-03-08 20:54:34.296060",
+ "modified_by": "Administrator",
+ "module": "Blood Cell Classification",
+ "name": "RBC Morphology Analysis",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
