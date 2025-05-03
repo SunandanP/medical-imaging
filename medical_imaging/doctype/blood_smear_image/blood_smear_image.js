@@ -3,7 +3,6 @@
 
 frappe.ui.form.on('Blood Smear Image', {
     refresh: function(frm) {
-
         // Ensure the button is only shown when the document is in submitted state (docstatus = 1)
         if (frm.doc.docstatus === 1) {
             frappe.db.get_value('Cell Detection Image', { blood_smear_image: frm.doc.name }, 'name')
@@ -32,16 +31,6 @@ frappe.ui.form.on('Blood Smear Image', {
                                         setTimeout(() => {
                                             frappe.set_route("Form", "Cell Detection Image", cell_detection_id);
                                         }, 2000);
-                                        frappe.call({
-                                            method: "frappe.model.workflow.apply_workflow",
-                                            args: {
-                                                doc: {
-                                                    doctype: frm.doc.doctype,
-                                                    name: frm.doc.name
-                                                },
-                                                action: "Detect Cells"  // This must exactly match the action name in your Workflow
-                                            }
-                                        });
                                     } else {
                                         frappe.msgprint(__('Cell Detection Failed!'));
                                     }

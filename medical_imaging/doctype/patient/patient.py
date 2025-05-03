@@ -1,10 +1,10 @@
 # Copyright (c) 2025, algo-rhythm.tech and contributors
 # For license information, please see license.txt
 
-import frappe
+# import frappe
 from frappe.model.document import Document
 
 
-class RBCMorphologyAnalysis(Document):
+class Patient(Document):
 	def before_save(self):
-		self.approved_by = frappe.get_value("User", self.approved_by_link, "full_name")
+		self.full_name = f"{self.first_name} {self.last_name}"

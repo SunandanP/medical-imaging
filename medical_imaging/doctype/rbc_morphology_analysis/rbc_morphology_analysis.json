@@ -11,7 +11,6 @@
   "cell_detection_image",
   "section_break_nxjr",
   "cells_examined",
-  "approved_by_link",
   "column_break_nljr",
   "normal_cell_count",
   "sickle_cell_count",
@@ -100,8 +99,9 @@
   },
   {
    "fieldname": "approved_by",
-   "fieldtype": "Read Only",
+   "fieldtype": "Link",
    "label": "Approved By",
+   "options": "User",
    "read_only": 1
   },
   {
@@ -113,18 +113,11 @@
    "fieldtype": "Date",
    "label": "Approval Date",
    "read_only": 1
-  },
-  {
-   "fieldname": "approved_by_link",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Approved By Link",
-   "options": "User"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-17 22:37:40.300492",
+ "modified": "2025-03-08 20:54:34.296060",
  "modified_by": "Administrator",
  "module": "Blood Cell Classification",
  "name": "RBC Morphology Analysis",

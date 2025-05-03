@@ -10,9 +10,9 @@ override_whitelisted_methods = {
 }
 
 doc_events = {
-    "Blood Cell Analysis Configuration": {
-        "on_update": "medical_imaging.medical_imaging.doctype.blood_cell_analysis_configuration.blood_cell_analysis_configuration.on_update"
-    }
+    # "Blood Cell Analysis Configuration": {
+    #     "on_update": "medical_imaging.medical_imaging.blood_cell_classification.doctype.blood_cell_analysis_configuration.blood_cell_analysis_configuration.on_update"
+    # }
 }
 
 # Apps

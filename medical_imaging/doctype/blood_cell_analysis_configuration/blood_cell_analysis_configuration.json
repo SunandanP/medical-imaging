@@ -20,18 +20,14 @@
    "label": "Cell Detection"
   },
   {
-   "default": "50",
    "fieldname": "detection_threshold",
    "fieldtype": "Percent",
-   "label": "Detection Threshold",
-   "precision": "2"
+   "label": "Detection Threshold"
   },
   {
-   "default": "15",
    "fieldname": "detection_average_area_tolerance",
    "fieldtype": "Percent",
-   "label": "Detection Average Area Tolerance",
-   "precision": "2"
+   "label": "Detection Average Area Tolerance"
   },
   {
    "fieldname": "column_break_slwg",
@@ -56,7 +52,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-03-24 15:53:07.016698",
+ "modified": "2025-03-11 16:05:23.187961",
  "modified_by": "Administrator",
  "module": "Blood Cell Classification",
  "name": "Blood Cell Analysis Configuration",

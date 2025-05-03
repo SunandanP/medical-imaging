@@ -1,31 +1,47 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:CD{YY}{######}",
- "creation": "2025-02-17 16:46:50.073443",
+ "autoname": "format:BSI{YY}{######}",
+ "creation": "2025-02-17 16:40:29.429135",
  "default_view": "Image",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "blood_smear_image",
-  "cell_detection_image",
-  "column_break_xlkm",
+  "patient",
+  "capture_date",
+  "image",
+  "zoom_leve",
+  "column_break_dmkq",
   "notes",
-  "section_break_tups",
-  "detection_result",
+  "microscope_model",
   "amended_from"
  ],
  "fields": [
   {
-   "fieldname": "blood_smear_image",
+   "fieldname": "patient",
    "fieldtype": "Link",
-   "label": "Blood Smear Image",
-   "options": "Blood Smear Image"
+   "label": "Patient",
+   "options": "Patient"
   },
   {
-   "fieldname": "cell_detection_image",
+   "fieldname": "capture_date",
+   "fieldtype": "Date",
+   "label": "Capture Date"
+  },
+  {
+   "fieldname": "image",
    "fieldtype": "Attach Image",
-   "label": "Cell Detection Image"
+   "label": "Image"
+  },
+  {
+   "default": "100",
+   "fieldname": "zoom_leve",
+   "fieldtype": "Int",
+   "label": "Zoom Leve"
+  },
+  {
+   "fieldname": "column_break_dmkq",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "notes",
@@ -33,42 +49,36 @@
    "label": "Notes"
   },
   {
-   "fieldname": "column_break_xlkm",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_tups",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "detection_result",
-   "fieldtype": "Table",
-   "label": "Detection Result",
-   "options": "Detection Result"
+   "default": "Leika",
+   "fieldname": "microscope_model",
+   "fieldtype": "Data",
+   "label": "Microscope Model"
   },
   {
    "fieldname": "amended_from",
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Cell Detection Image",
+   "options": "Blood Smear Image",
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
   }
  ],
- "image_field": "cell_detection_image",
+ "image_field": "image",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-25 23:33:52.741940",
+ "modified": "2025-03-11 15:21:21.703909",
  "modified_by": "Administrator",
  "module": "Blood Cell Classification",
- "name": "Cell Detection Image",
+ "name": "Blood Smear Image",
  "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
+   "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -77,11 +87,14 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "select": 1,
    "share": 1,
    "submit": 1,
    "write": 1
   },
   {
+   "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -90,6 +103,7 @@
    "read": 1,
    "report": 1,
    "role": "Doctor",
+   "select": 1,
    "share": 1,
    "submit": 1,
    "write": 1

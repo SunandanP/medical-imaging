@@ -2,7 +2,7 @@ import frappe
 import json
 import os
 import base64
-from PIL import Image
+from PIL import Image, ImageDraw
 from frappe.utils.file_manager import get_file_path
 
 
@@ -22,10 +22,10 @@ def extract_cells():
         # Fetch Blood Smear Image from linked Doctype
         blood_smear_doc = frappe.get_doc("Blood Smear Image", cell_detection_image_doc.blood_smear_image)
         blood_smear_image_path = get_file_path(blood_smear_doc.image)
-        img = Image.open(blood_smear_image_path).convert("RGB")
 
         extracted_cells = []
         for result in cell_detection_image_doc.detection_result:
+            img = Image.open(blood_smear_image_path).convert("RGB")
             bbox = json.loads(result.bounding_coordinates)
             classification = result.classification
 
@@ -46,8 +46,21 @@ def extract_cells():
             extracted_path = f'bloodcell.classify/private/files/{cell_detection_image_id}_{new_x1}_{new_y1}.png'
             cropped_img.save(extracted_path)
 
+            # Create a drawing context
+            draw = ImageDraw.Draw(img)
+
+            color = "red"  # You can customize the color based on the label
+            draw.rectangle([x1, y1, x2, y2], outline=color, width=2)
+
+            cropped_img_cd = img.crop((new_x1, new_y1, new_x2, new_y2))
+            extracted_path_cd = f'bloodcell.classify/private/files/{cell_detection_image_id}_{new_x1}_{new_y1}_CD.png'
+            cropped_img_cd.save(extracted_path_cd)
+
             with open(extracted_path, "rb") as img_file:
                 encoded_image = base64.b64encode(img_file.read()).decode("utf-8")
+
+            with open(extracted_path_cd, "rb") as image_file_cd:
+                encoded_image_cd = base64.b64encode(image_file_cd.read()).decode("utf-8")
 
             file_doc = frappe.get_doc({
                 "doctype": "File",
@@ -59,11 +72,23 @@ def extract_cells():
             })
             file_doc.insert(ignore_permissions=True)
 
+            file_doc_cd = frappe.get_doc({
+                "doctype": "File",
+                "file_name": f"{cell_detection_image_id}_{new_x1}_{new_y1}_CD.png",
+                "file_url": f"/private/files/{cell_detection_image_id}_{new_x1}_{new_y1}_CD.png",
+                "content": encoded_image_cd,
+                "decode": True,
+                "is_private": True
+            })
+            file_doc_cd.insert(ignore_permissions=True)
+
             extracted_cell_doc = frappe.get_doc({
                 "doctype": "Extracted Cell",
                 "cell_detection_image": cell_detection_image_id,
                 "cell_image": file_doc.file_url,
-                "primary_classification": classification
+                "primary_classification": classification,
+                "cell_detection_result": file_doc_cd.file_url,
+                "cell_number": len(extracted_cells) + 1
             })
             extracted_cell_doc.insert(ignore_permissions=True)
 
@@ -74,6 +99,9 @@ def extract_cells():
 
             if os.path.exists(extracted_path):
                 os.remove(extracted_path)
+
+            if os.path.exists(extracted_path_cd):
+                os.remove(extracted_path_cd)
 
         return {
             "message": "Cells extracted and saved successfully!",

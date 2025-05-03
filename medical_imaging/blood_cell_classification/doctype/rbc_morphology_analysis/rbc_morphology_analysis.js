@@ -1,29 +1,37 @@
-// Copyright (c) 2025, algo-rhythm.tech and contributors
-// For license information, please see license.txt
-
 frappe.ui.form.on("RBC Morphology Analysis", {
     refresh(frm) {
-        // Only show the Approve button if the document is not already approved
-        // and if the user has permission to approve
         if (!frm.doc.approved_by) {
-            frm.add_custom_button(__('Approve'), function() {
-                // Get current user
+            frm.add_custom_button(__('Approve'), async function() {
                 const current_user = frappe.session.user;
-                // Get current date in yyyy-mm-dd format
                 const current_date = frappe.datetime.get_today();
 
-                // Update the fields
-                frm.set_value('approved_by', current_user);
-                frm.set_value('approval_date', current_date);
+                // Update approval fields
+                await frm.set_value('approved_by_link', current_user);
+                await frm.set_value('approval_date', current_date);
 
-                // Save the document
-                frm.save();
-                frm.reload()
+                await frm.save(); // Save the document first
 
-                frappe.show_alert({
-                    message: __('Document approved successfully!'),
-                    indicator: 'green'
-                }, 3);
+                // Apply workflow only if state is Pending Approval
+                if (frm.doc.workflow_state === "Pending Approval") {
+                    frappe.call({
+                        method: "frappe.model.workflow.apply_workflow",
+                        args: {
+                            doc: frm.doc,  // pass the full document
+                            action: "Approve"
+                        },
+                        callback: function(r) {
+                            if (!r.exc) {
+                                frappe.show_alert({
+                                    message: __('Document approved successfully!'),
+                                    indicator: 'green'
+                                }, 3);
+                                frm.reload(); // Refresh to reflect the workflow change
+                            }
+                        }
+                    });
+                } else {
+                    frm.reload(); // fallback reload if not in workflow state
+                }
             }).addClass('btn-primary');
         }
     },
