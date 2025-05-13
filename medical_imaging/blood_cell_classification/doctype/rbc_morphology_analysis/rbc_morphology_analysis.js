@@ -25,6 +25,23 @@ frappe.ui.form.on("RBC Morphology Analysis", {
                                     message: __('Document approved successfully!'),
                                     indicator: 'green'
                                 }, 3);
+                                frappe.call({
+                                    method: "medical_imaging.api.send_mail.send_rbc_report_email",
+                                    args: {
+                                        docname: frm.doc.name,
+                                    },
+                                    callback: function(r) {
+                                        if (r.message && r.message.status === "success") {
+                                            frappe.msgprint(r.message.message);
+                                        } else {
+                                            frappe.msgprint({
+                                                title: "Error",
+                                                message: r.message.message || "Failed to send email.",
+                                                indicator: "red"
+                                            });
+                                        }
+                                    }
+                                });
                                 frm.reload(); // Refresh to reflect the workflow change
                             }
                         }
