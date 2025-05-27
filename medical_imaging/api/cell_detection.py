@@ -10,6 +10,7 @@ from PIL import Image, ImageDraw
 from torchvision.models.detection import fasterrcnn_resnet50_fpn
 import frappe
 from frappe.utils.file_manager import get_file_path
+from medical_imaging.doctype.blood_cell_analysis_configuration.blood_cell_analysis_configuration import ( get_detection_threshold_configuration, get_detection_average_area_tolerance)
 
 configurations = frappe.get_single("Blood Cell Analysis Configuration")
 # Load Faster R-CNN model
@@ -64,7 +65,7 @@ def get_predictions(image_path):
     average_area = np.mean(areas)
 
     # Define the tolerance (15%)
-    tolerance = configurations.detection_average_area_tolerance/100
+    tolerance = get_detection_average_area_tolerance()/100
     upper_limit = average_area * (1 + tolerance)
 
     # Filter out items whose area exceeds the average area by more than 15%
@@ -141,7 +142,7 @@ def detect_cells():
 
         full_path = get_file_path(blood_smear_image.image)
         prediction = get_predictions(full_path)
-        score_threshold = configurations.detection_threshold/100
+        score_threshold = get_detection_threshold_configuration()/100
         prediction = save_img_prediction(prediction, full_path, blood_smear_id, score_threshold=score_threshold)
 
         boxes, labels, scores, file_url = prediction

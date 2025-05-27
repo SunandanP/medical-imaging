@@ -23,3 +23,9 @@ class BloodCellAnalysisConfiguration(Document):
 		frappe.clear_cache(doctype="Blood Cell Analysis Configuration")  # Clear doctype cache
 		frappe.db.commit()  # Commit to apply changes
 		frappe.logger().info("Cache Cleared: Blood Cell Analysis Configuration")
+
+def get_detection_threshold_configuration():
+	return frappe.get_single("Blood Cell Analysis Configuration").detection_threshold
+
+def get_detection_average_area_tolerance():
+	return frappe.get_single("Blood Cell Analysis Configuration").detection_average_area_tolerance
